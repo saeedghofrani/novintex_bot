@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Telegraf } from 'telegraf';
 import { Repository } from 'typeorm';
 import { CreateBotUserDto } from './bot.dto';
 import { botUser } from './bot.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { Context, Telegraf } from 'telegraf';
+import { Update } from 'typegram';
 
 @Injectable()
 export class BotService {
     constructor(@InjectRepository(botUser) private userRepository: Repository<botUser>) { }
 
-    
+
     async createUser(body: CreateBotUserDto): Promise<void> {
         const newUser: botUser = await this.userRepository.create({
             first_name: body.first_name,
@@ -23,10 +24,10 @@ export class BotService {
 
 
     async startBot(token: string) {
-        const code = this.createToken()
-        const regex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        const code = this.createToken();
+        const regex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
 
-        const bot = new Telegraf(String(token));
+        const bot: Telegraf<Context<Update>> = new Telegraf(token as string);
         bot.start((ctx) => {
             ctx.reply('سلام لطفا ایمیل');
 
@@ -44,7 +45,23 @@ export class BotService {
                         }
                     })
                 })
+
             });
+
+            // const uuidV4Regex = new RegExp(/^[A-F\d]{8}-[A-F\d]{4}-4[A-F\d]{3}-[89AB][A-F\d]{3}-[A-F\d]{12}$/i);
+            // if ((!regex.test(ctx.message['text'])) && (ctx.message['text'] !== '/start')) {
+            //     ctx.reply('ایمیل وارد شده معتبر نیست');
+            //     return;
+            // }
+            // bot.use(async (ctx, next) => {
+
+            //     if (!uuidV4Regex.test(ctx.message['text'])) {
+            //         ctx.reply('کد وارد شده اشتباه است');
+            //         await next();
+            //         return;
+            //     } 
+            //         await next();
+            // });
 
         });
 
@@ -53,6 +70,7 @@ export class BotService {
         bot.launch();
         process.once('SIGINT', () => bot.stop('SIGINT'));
         process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
         return code;
     }
 
@@ -84,5 +102,13 @@ export class BotService {
                 { text: "لیست ارز", callback_data: 'god' }
             ],
         ]
+    }
+
+    checkInput(text, ctx) {
+        const uuidV4Regex = new RegExp(/^[A-F\d]{8}-[A-F\d]{4}-4[A-F\d]{3}-[89AB][A-F\d]{3}-[A-F\d]{12}$/i);
+        if ((!uuidV4Regex.test(text))) {
+            ctx.reply('ایمیل وارد شده معتبر نیست');
+            return;
+        }
     }
 }
