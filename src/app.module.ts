@@ -18,4 +18,4 @@ const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

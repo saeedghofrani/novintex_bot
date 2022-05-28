@@ -36,17 +36,17 @@ bot.start((ctx) => {
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            { text: "اطلاعات کاربری", callback_data: 'TENDER' },
-                            { text: "احراز هویت", callback_data: 'VACANCY' }
+                            { text: "اطلاعات کاربری", callback_data: 'userInfo' },
+                            { text: "احراز هویت", callback_data: 'identify' }
                         ],
 
                         [
-                            { text: "خرید و فروش", callback_data: 'hello' },
-                            { text: "قیمت ارز", callback_data: 'bye' }
+                            { text: "خرید و فروش", callback_data: 'buySell' },
+                            { text: "قیمت ارز", callback_data: 'price' }
                         ],
 
                         [
-                            { text: "لیست ارز", callback_data: 'god' }
+                            { text: "لیست ارز", callback_data: 'list' }
                         ],
                     ]
                 }
@@ -107,5 +107,13 @@ process.once('SIGTERM', () => bot.stop('SIGTERM'))
 
 
 
+    // @Get('/msg')
+    // message(): void {
+    //     this.userService.sendMessage('sadasd', 'asdasad');
+    // }
 
 
+    // sendMessage(chatId: string, message: string) {
+    //     const bot: Telegraf<Context<Update>> = new Telegraf(this.config.get<string>('TELEGRAM_TOKEN_DEV') as string);
+    //     bot.telegram.sendMessage(chatId, message);
+    // }

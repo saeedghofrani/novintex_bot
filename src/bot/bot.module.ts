@@ -7,6 +7,6 @@ import { botUser } from './bot.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([botUser])],
   providers: [BotService],
-  controllers: [BotController]
+  controllers: [BotController],
 })
-export class BotModule { }
+export class BotModule {}
