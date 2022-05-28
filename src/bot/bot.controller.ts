@@ -1,19 +1,23 @@
 import {
     Controller,
-    Get,
+    Post,
 } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BotService } from './bot.service';
 
+@ApiTags('bot')
+@ApiResponse({status: 200, description: 'bot started succesfully'})
 @Controller('bot')
 export class BotController {
     constructor(private readonly userService: BotService) { }
 
-    @Get()
+    @Post()
     async Bot(): Promise<object> {
 
-        const code = await this.userService.startBot('5380617566:AAGNYy2DvzbMRTdOtJazVhPv8I6dEclKTiI');
+        const code: string = this.userService.startBot();
 
-        const objJson1 = JSON.parse(JSON.stringify({
+
+        const objJson1: Object = JSON.parse(JSON.stringify({
             botStarted: true,
             botId: '@test_1382_bot',
             code: code
@@ -21,4 +25,3 @@ export class BotController {
         return objJson1;
     }
 }
-

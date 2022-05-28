@@ -75,6 +75,36 @@ process.once('SIGTERM', () => bot.stop('SIGTERM'))
 
 
 
+            // const uuidV4Regex = new RegExp(/^[A-F\d]{8}-[A-F\d]{4}-4[A-F\d]{3}-[89AB][A-F\d]{3}-[A-F\d]{12}$/i);
+            // if ((!regex.test(ctx.message['text'])) && (ctx.message['text'] !== '/start')) {
+            //     ctx.reply('ایمیل وارد شده معتبر نیست');
+            //     return;
+            // }
+            // bot.use(async (ctx, next) => {
+
+            //     if (!uuidV4Regex.test(ctx.message['text'])) {
+            //         ctx.reply('کد وارد شده اشتباه است');
+            //         await next();
+            //         return;
+            //     } 
+            //         await next();
+            // });
+
+            // bot.on('callback_query', async (ctx) => {
+            //     ctx.reply(`Your answer was: ${ctx.update.callback_query.data}`);
+            //    })
+
+
+            
+    // checkInput(text, ctx) {
+    //     const uuidV4Regex: RegExp = new RegExp(/^[A-F\d]{8}-[A-F\d]{4}-4[A-F\d]{3}-[89AB][A-F\d]{3}-[A-F\d]{12}$/i);
+    //     if ((!uuidV4Regex.test(text))) {
+    //         ctx.reply('ایمیل وارد شده معتبر نیست');
+    //         return;
+    //     }
+    // }
+
+
 
 
 
