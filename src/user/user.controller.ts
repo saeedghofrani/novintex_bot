@@ -34,6 +34,7 @@ export class UserController {
 
   @Post('findChildTree')
   async findChildTree(@Body() body: any) {
-    return this.userService.findChildTree(body.id);
+    return this.userService.findChildTree(body.secondId);
   }
+  
 }
