@@ -8,11 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'user_nested' })
-@Tree('closure-table', {
-  closureTableName: 'closure_table',
-  ancestorColumnName: (column) => 'ancestor_' + column.propertyName,
-  descendantColumnName: (column) => 'descendant_' + column.propertyName,
-})
+@Tree('closure-table', {})
 export class UserNested {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,6 +18,9 @@ export class UserNested {
 
   @Column()
   last_name: string;
+
+  @Column({ nullable: true })
+  secondId?: number;
 
   @TreeChildren()
   children?: UserNested[];
