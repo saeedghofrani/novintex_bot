@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post()
   async createUser(@Body() body: CreateUserDto) {
@@ -36,5 +36,5 @@ export class UserController {
   async findChildTree(@Body() body: any) {
     return this.userService.findChildTree(body.secondId);
   }
-  
+
 }
