@@ -1,29 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getManager, Repository } from 'typeorm';
-import { CreateUserDto } from './user.dto';
 import { UserNested } from './user.entity';
 
 @Injectable()
 export class UserService {
+
   constructor(
     @InjectRepository(UserNested)
     private userRepository: Repository<UserNested>,
-  ) {}
+  ) { }
 
   async createUser(body: any): Promise<void> {
-    if (body.parent) {
-      const parent = await this.findOne(body.parent);
-      body.parent = parent;
-    }
+    if (body.parent)
+      body.parent = await this.findOne(body.parent);
+
     const newUser = this.userRepository.create(body);
     await this.userRepository.save(newUser);
   }
 
   async findAll() {
-    return await getManager()
-      .getTreeRepository(UserNested)
-      .findTrees({ depth: 5 });
+    return await getManager().getTreeRepository(UserNested).findTrees();
   }
 
   async findParrents() {
@@ -39,8 +36,8 @@ export class UserService {
       .findDescendants(parrent);
   }
 
-  async findChildTree(id: number) {
-    const parrent = await this.userRepository.findOne(id);
+  async findChildTree(secondId: number) {
+    const parrent = await this.userRepository.findOne({ where: { secondId } });
     return await getManager()
       .getTreeRepository(UserNested)
       .findDescendantsTree(parrent);
@@ -53,7 +50,8 @@ export class UserService {
       .findAncestors(child);
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Object> {
     return await this.userRepository.findOne(id);
   }
+
 }
