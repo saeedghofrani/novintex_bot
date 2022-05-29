@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { UserNested } from './user.entity';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -12,6 +11,10 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   public last_name: string;
+
+  @IsOptional()
+  @ApiProperty()
+  public secondId?: number;
 
   @IsOptional()
   @ApiProperty()
