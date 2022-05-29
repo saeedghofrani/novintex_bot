@@ -38,7 +38,7 @@ export class UserService {
       .getTreeRepository(UserNested)
       .findDescendants(parrent);
   }
-  
+
   async findChildTree(id: number) {
     const parrent = await this.userRepository.findOne(id);
     return await getManager()
