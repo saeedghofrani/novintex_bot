@@ -19,8 +19,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document);
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-
   await app.listen(port, () => {
     console.log('[WEB]', config.get<string>('BASE_URL'));
   });
